@@ -477,7 +477,8 @@
                         "function": "[variables('clusterPrepFunction')]"
                     },
                     "configurationArguments": {
-                        "domainName": "[parameters('domainName')]"
+                        "domainName": "[parameters('domainName')]",
+                        "listenerProbePort": "[variables('ilbProbePort')]"
                     }
                 },
                 "protectedSettings": {
