@@ -160,8 +160,8 @@ configuration ConfigureCluster
 
         Script ClusterIPAddress {
             SetScript  = "Get-ClusterResource -Name 'IP Address ${ListenerIPAddress}' | Set-ClusterParameter -Name ProbePort ${ListenerProbePort}; Stop-ClusterGroup -Name ${FSName}; Start-ClusterGroup -Name ${FSName}"
-            TestScript = "(Get-ClusterResource -Name 'IP Address ${ListenerIPAddress} -ErrorAction SilentlyContinue' | Get-ClusterParameter -Name ProbePort).Value -eq ${ListenerProbePort}"
-            GetScript  = "@{Ensure = if ((Get-ClusterResource -Name 'IP Address ${ListenerIPAddress} -ErrorAction SilentlyContinue' | Get-ClusterParameter -Name ProbePort).Value -eq ${ListenerProbePort}) {'Present'} else {'Absent'}}"
+            TestScript = "(Get-ClusterResource -Name 'IP Address ${ListenerIPAddress}' -ErrorAction SilentlyContinue | Get-ClusterParameter -Name ProbePort).Value -eq ${ListenerProbePort}"
+            GetScript  = "@{Ensure = if ((Get-ClusterResource -Name 'IP Address ${ListenerIPAddress}' -ErrorAction SilentlyContinue | Get-ClusterParameter -Name ProbePort).Value -eq ${ListenerProbePort}) {'Present'} else {'Absent'}}"
             DependsOn  = "[Script]ClusterFileServerRole"
         }
         
