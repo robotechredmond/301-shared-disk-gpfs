@@ -265,7 +265,7 @@
                         "name": "loadBalancingRules",
                         "count": "[length(variables('ilbListenPorts'))]",
                         "input": {
-                            "name": "[concat('rule',copyIndex())]",
+                            "name": "[concat('rule',copyIndex('loadBalancingRules'))]",
                             "properties": {
                                 "frontendIPConfiguration": {
                                     "id": "[concat(resourceId('Microsoft.Network/loadBalancers',variables('ilbName')),'/frontendIPConfigurations/feIpConfig0')]"
@@ -276,9 +276,9 @@
                                 "probe": {
                                     "id": "[concat(resourceId('Microsoft.Network/loadBalancers',variables('ilbName')),'/probes/probe0')]"
                                 },
-                                "protocol": "[variables('ilbListenPorts')[copyIndex()].protocol]",
-                                "frontendPort": "[variables('ilbListenPorts')[copyIndex()].frontend]",
-                                "backendPort": "[variables('ilbListenPorts')[copyIndex()].backend]",
+                                "protocol": "[variables('ilbListenPorts')[copyIndex('loadBalancingRules')].protocol]",
+                                "frontendPort": "[variables('ilbListenPorts')[copyIndex('loadBalancingRules')].frontend]",
+                                "backendPort": "[variables('ilbListenPorts')[copyIndex('loadBalancingRules')].backend]",
                                 "enableFloatingIP": true
                             }
                         }

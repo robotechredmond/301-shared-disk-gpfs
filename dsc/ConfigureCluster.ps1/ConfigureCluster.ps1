@@ -148,6 +148,7 @@ configuration ConfigureCluster
             SetScript  = "Add-ClusterFileServerRole -Name ${FSName} -Storage `$((Get-ClusterGroup -Name 'Available Storage' | Get-ClusterResource | ? ResourceType -eq 'Physical Disk').Name) -StaticAddress ${ListenerIPAddress}"
             TestScript = "(Get-ClusterResource -Name 'File Server (\\${FSName})' -ErrorAction SilentlyContinue).State -eq 'Online'"
             GetScript  = "@{Ensure = if ((Get-ClusterResource -Name 'File Server (\\${FSName})' -ErrorAction SilentlyContinue).State -eq 'Online') {'Present'} else {'Absent'}}"
+            PsDscRunAsCredential = $DomainCreds
             DependsOn  = "[Script]IncreaseClusterTimeouts"
         }
 
