@@ -80,6 +80,12 @@ configuration ConfigureCluster
             DependsOn = "[WindowsFeature]FCCmd"
         }
 
+        WindowsFeature FS
+        {
+            Name = "FS-FileServer"
+            Ensure = "Present"
+        }
+
         WaitForADDomain DscForestWait 
         { 
             DomainName              = $DomainName 
@@ -103,7 +109,7 @@ configuration ConfigureCluster
             TestScript           = "(Get-Cluster -ErrorAction SilentlyContinue).Name -eq '${ClusterName}'"
             GetScript            = "@{Ensure = if ((Get-Cluster -ErrorAction SilentlyContinue).Name -eq '${ClusterName}') {'Present'} else {'Absent'}}"
             PsDscRunAsCredential = $DomainCreds
-            DependsOn            = "[Computer]DomainJoin"
+            DependsOn            = @("[Computer]DomainJoin", "[WindowsFeature]FS")
         }
 
         foreach ($Node in $Nodes) {

@@ -43,6 +43,12 @@ configuration PrepareClusterNode
             Ensure = "Present"
         }
 
+        WindowsFeature FS
+        {
+            Name = "FS-FileServer"
+            Ensure = "Present"
+        }
+
         WaitForADDomain DscForestWait 
         { 
             DomainName = $DomainName 
